@@ -122,6 +122,10 @@ return array(
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
 
+        /* development providers */
+        //'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
+        //'Barryvdh\Debugbar\ServiceProvider',
+        //'Way\Generators\GeneratorsServiceProvider'
 	),
 
 	/*
