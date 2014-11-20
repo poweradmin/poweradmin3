@@ -2,27 +2,44 @@
 
 class IndexController extends BaseController {
 
-	/*
-	|--------------------------------------------------------------------------
-	| Default Home Controller
-	|--------------------------------------------------------------------------
-	|
-	| You may wish to use controllers instead of, or in addition to, Closure
-	| based routes. That's great! Here is an example controller method to
-	| get you started. To route to this controller, just add the route:
-	|
-	|	Route::get('/', 'HomeController@showWelcome');
-	|
-	*/
+	public function __construct()
+    {
+        $this->beforeFilter('csrf', array('on' => 'post'));
+        $this->beforeFilter('auth', array('except' => array('getIndex','postIndex')));
+    }
 
 	public function getIndex()
 	{
-		return View::make('index.index');
+		if( Auth::check() ) {
+            return Redirect::to('dashboard');
+        }
+
+        return View::make('index.index');
 	}
 
     public function postIndex()
     {
-        
+        if (Auth::attempt(['username'=>Input::get('username'), 'password'=>Input::get('password'), 'status'=>1])) {
+            return Redirect::to('dashboard')->with('message', 'You are now logged in!');
+        } else {
+            return Redirect::back()
+                ->with('error', 'Incorrect login or password')
+                ->withInput();
+        }
+    }
+
+    public function getDashboard()
+    {
+        $domains = Domain::all();
+
+        return View::make('index.dashboard')
+            ->withDomains($domains);
+    }
+
+    public function getLogout()
+    {
+        Auth::logout();
+        return Redirect::to('/');
     }
 
 }
