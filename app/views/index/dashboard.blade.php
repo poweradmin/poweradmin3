@@ -4,6 +4,7 @@
 
 <h1>Domains list</h1>
 
+@if(count($domains)>0)
 <table class="table table-striped">
     <thead>
         <tr>
@@ -29,5 +30,8 @@
         @endforeach
     </tbody>
 </table>
+@else
+    <div class="alert alert-warning" role="alert">No domains</div>
+@endif
 
 @stop
