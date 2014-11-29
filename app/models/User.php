@@ -1,26 +1,15 @@
 <?php
 
-use Illuminate\Auth\UserTrait;
-use Illuminate\Auth\UserInterface;
+use Zizaco\Confide\ConfideUser;
+use Zizaco\Confide\ConfideUserInterface;
 
-class User extends Eloquent implements UserInterface
+class User extends Eloquent implements ConfideUserInterface
 {
-    use UserTrait;
+    use ConfideUser;
 
-    /**
-     * The database table used by the model.
-     *
-     * @var string
+    /*
+     * User statuses
      */
-    protected $table = 'users';
-
-    /**
-     * The attributes excluded from the model's JSON form.
-     *
-     * @var array
-     */
-    protected $hidden = array('password', 'remember_token');
-
     const STATUS_INACTIVE = 0;
     const STATUS_ACTIVE = 1;
 }

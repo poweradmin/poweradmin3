@@ -52,6 +52,12 @@ body {
 
     {{ Form::text('username', null, array('class'=>'form-control', 'placeholder'=>'Username', 'required', 'autofocus')) }}
     {{ Form::password('password', array('class'=>'form-control', 'placeholder'=>'Password', 'required')) }}
+    <div class="checkbox">
+        <label>
+            {{ Form::hidden('remember', 0) }}
+            {{ Form::checkbox('remember', 1) }} Remember me
+        </label>
+    </div>
 
     <button class="btn btn-lg btn-primary btn-block" type="submit">Go</button>
 {{ Form::close() }}

@@ -122,6 +122,9 @@ return array(
         'Illuminate\View\ViewServiceProvider',
         'Illuminate\Workbench\WorkbenchServiceProvider',
 
+        /* package providers */
+        'Zizaco\Confide\ServiceProvider',
+
         /* development providers */
         //'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
         //'Barryvdh\Debugbar\ServiceProvider',
@@ -192,6 +195,9 @@ return array(
         'URL'               => 'Illuminate\Support\Facades\URL',
         'Validator'         => 'Illuminate\Support\Facades\Validator',
         'View'              => 'Illuminate\Support\Facades\View',
+
+        /* package aliases */
+        'Confide'           => 'Zizaco\Confide\Facade',
 
     ),
 

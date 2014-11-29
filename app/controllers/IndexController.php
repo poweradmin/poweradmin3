@@ -8,37 +8,57 @@ class IndexController extends BaseController
         $this->beforeFilter('auth', array('except' => array('getIndex', 'postIndex')));
     }
 
+    /**
+     * Displays the login form
+     *
+     * @return  Illuminate\Http\Response
+     */
     public function getIndex()
     {
-        if (Auth::check()) {
+        if (Confide::user()) {
             return Redirect::to('dashboard');
         }
 
         return View::make('index.index');
     }
 
+    /**
+     * Attempt to do login
+     *
+     * @return  Illuminate\Http\Response
+     */
     public function postIndex()
     {
-        if (Auth::attempt(['username' => Input::get('username'), 'password' => Input::get('password'), 'status' => 1])) {
-            return Redirect::to('dashboard')->with('message', 'You are now logged in!');
-        } else {
+        $repo = App::make('UserRepository');
+        $input = Input::all();
+
+        if ($repo->login($input)) {
+            return Redirect::intended('dashboard')
+                ->with('message', 'You are now logged in!');
+        }
+        else {
+            if ($repo->isThrottled($input)) {
+                $err_msg = Lang::get('confide::confide.alerts.too_many_attempts');
+            } elseif ($repo->existsButNotConfirmed($input)) {
+                $err_msg = Lang::get('confide::confide.alerts.not_confirmed');
+            } else {
+                $err_msg = Lang::get('confide::confide.alerts.wrong_credentials');
+            }
+
             return Redirect::back()
-                ->with('error', 'Incorrect login or password')
-                ->withInput();
+                ->withInput(Input::except('password'))
+                ->with('error', $err_msg);
         }
     }
 
-    public function getDashboard()
-    {
-        $domains = Domain::all();
-
-        return View::make('index.dashboard')
-            ->withDomains($domains);
-    }
-
+    /**
+     * Log the user out of the application.
+     *
+     * @return  Illuminate\Http\Response
+     */
     public function getLogout()
     {
-        Auth::logout();
+        Confide::logout();
 
         return Redirect::to('/');
     }
