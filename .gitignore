@@ -3,5 +3,4 @@
 /vendor
 composer.phar
 composer.lock
-app/config/local
 _ide_helper*
