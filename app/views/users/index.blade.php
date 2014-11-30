@@ -6,7 +6,7 @@
 
 <div class="btn-group" role="group" aria-label="...">
     <a href="{{ URL::to('users/add') }}" class="btn btn-default btn-success">Add user</a>
-    <a href="{{ URL::to('users/perms') }}" class="btn btn-default btn-info">Edit permissions</a>
+    <a href="{{ URL::to('users/roles') }}" class="btn btn-default btn-info">Edit roles</a>
 </div>
 
 <table class="table table-striped">

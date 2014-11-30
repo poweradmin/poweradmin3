@@ -124,6 +124,7 @@ return array(
 
         /* package providers */
         'Zizaco\Confide\ServiceProvider',
+        'Zizaco\Entrust\EntrustServiceProvider',
 
         /* development providers */
         //'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
@@ -198,6 +199,7 @@ return array(
 
         /* package aliases */
         'Confide'           => 'Zizaco\Confide\Facade',
+        'Entrust'           => 'Zizaco\Entrust\EntrustFacade',
 
     ),
 

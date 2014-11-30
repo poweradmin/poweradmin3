@@ -46,4 +46,14 @@ class UsersController extends BaseController
                 ->with('error', $error);
         }
     }
+
+    public function getRoles()
+    {
+        $roleRepo = App::make('RoleRepository');
+
+        $roles = $roleRepo->getAll();
+
+        return View::make('users.roles')
+            ->withRoles($roles);
+    }
 }
