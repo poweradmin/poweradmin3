@@ -118,6 +118,28 @@ class IndexController extends BaseController
     }
 
     /**
+     * Attempt to confirm account with code
+     *
+     * @param string $code
+     *
+     * @return Illuminate\Http\Response
+     */
+    public function getUserConfirm($code)
+    {
+        if (Confide::confirm($code)) {
+            $notice_msg = Lang::get('confide::confide.alerts.confirmation');
+
+            return Redirect::to('/')
+                ->with('notice', $notice_msg);
+        } else {
+            $error_msg = Lang::get('confide::confide.alerts.wrong_confirmation');
+
+            return Redirect::to('/')
+                ->with('error', $error_msg);
+        }
+    }
+
+    /**
      * Log the user out of the application.
      *
      * @return Illuminate\Http\Response

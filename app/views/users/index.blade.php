@@ -4,13 +4,18 @@
 
 <h1>Users list</h1>
 
+<div class="btn-group" role="group" aria-label="...">
+    <a href="{{ URL::to('users/add') }}" class="btn btn-default btn-success">Add user</a>
+    <a href="{{ URL::to('users/perms') }}" class="btn btn-default btn-info">Edit permissions</a>
+</div>
+
 <table class="table table-striped">
     <thead>
         <tr>
             <th>#</th>
-            <th>Name</th>
-            <th>Type</th>
-            <th>Records</th>
+            <th>Username</th>
+            <th>E-mail</th>
+            <th>Description</th>
             <th></th>
         </tr>
     </thead>
