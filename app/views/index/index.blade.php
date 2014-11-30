@@ -60,6 +60,8 @@ body {
     </div>
 
     <button class="btn btn-lg btn-primary btn-block" type="submit">Go</button>
+
+    <p><a href="{{ URL::to('/forgot-password') }}">I forgot my password</a></p>
 {{ Form::close() }}
 
 @stop

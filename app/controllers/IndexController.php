@@ -2,12 +2,6 @@
 
 class IndexController extends BaseController
 {
-    public function __construct()
-    {
-        $this->beforeFilter('csrf', array('on' => 'post'));
-        $this->beforeFilter('auth', array('except' => array('getIndex', 'postIndex')));
-    }
-
     /**
      * Displays the login form
      *
@@ -48,6 +42,76 @@ class IndexController extends BaseController
             return Redirect::back()
                 ->withInput(Input::except('password'))
                 ->with('error', $err_msg);
+        }
+    }
+
+    /**
+     * Displays the forgot password form
+     *
+     * @return  Illuminate\Http\Response
+     */
+    public function getForgotPassword()
+    {
+        return View::make(Config::get('confide::forgot_password_form'));
+    }
+
+    /**
+     * Attempt to send change password link to the given email
+     *
+     * @return  Illuminate\Http\Response
+     */
+    public function postForgotPassword()
+    {
+        if (Confide::forgotPassword(Input::get('email'))) {
+            $notice_msg = Lang::get('confide::confide.alerts.password_forgot');
+            return Redirect::to('/')
+                ->with('notice', $notice_msg);
+        }
+        else {
+            $error_msg = Lang::get('confide::confide.alerts.wrong_password_forgot');
+            return Redirect::back()
+                ->withInput()
+                ->with('error', $error_msg);
+        }
+    }
+
+    /**
+     * Shows the change password form with the given token
+     *
+     * @param  string $token
+     *
+     * @return  Illuminate\Http\Response
+     */
+    public function getResetUserPassword($token)
+    {
+        return View::make(Config::get('confide::reset_password_form'))
+            ->with('token', $token);
+    }
+
+    /**
+     * Attempt change password of the user
+     *
+     * @return  Illuminate\Http\Response
+     */
+    public function postResetUserPassword()
+    {
+        $repo = App::make('UserRepository');
+        $input = [
+            'token'                 => Input::get('token'),
+            'password'              => Input::get('password'),
+            'password_confirmation' => Input::get('password_confirmation'),
+        ];
+
+        // By passing an array with the token, password and confirmation
+        if ($repo->resetPassword($input)) {
+            $notice_msg = Lang::get('confide::confide.alerts.password_reset');
+            return Redirect::to('/')
+                ->with('notice', $notice_msg);
+        } else {
+            $error_msg = Lang::get('confide::confide.alerts.wrong_password_reset');
+            return Redirect::action('IndexController@getResetUserPassword', ['token'=>$input['token']])
+                ->withInput()
+                ->with('error', $error_msg);
         }
     }
 
