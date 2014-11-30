@@ -12,7 +12,7 @@ class ConfideSetupUsersTable extends Migration
     {
         // Creates the users table
         Schema::table('users', function (Blueprint $table) {
-            $table->renameColumn('status','confirmed');
+            $table->renameColumn('status', 'confirmed');
             $table->string('confirmation_code')->after('remember_token');
         });
 
@@ -33,7 +33,7 @@ class ConfideSetupUsersTable extends Migration
 
         Schema::table('users', function (Blueprint $table) {
             $table->removeColumn('confirmation_code');
-            $table->renameColumn('confirmed','status');
+            $table->renameColumn('confirmed', 'status');
         });
     }
 }

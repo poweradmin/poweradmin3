@@ -1,7 +1,6 @@
 <?php
 
 
-
 /**
  * UsersController Class
  *
@@ -9,11 +8,10 @@
  */
 class UserController extends Controller
 {
-
     /**
      * Displays the form for account creation
      *
-     * @return  Illuminate\Http\Response
+     * @return Illuminate\Http\Response
      */
     public function create()
     {
@@ -23,7 +21,7 @@ class UserController extends Controller
     /**
      * Stores new account
      *
-     * @return  Illuminate\Http\Response
+     * @return Illuminate\Http\Response
      */
     public function store()
     {
@@ -58,21 +56,22 @@ class UserController extends Controller
     /**
      * Attempt to confirm account with code
      *
-     * @param  string $code
+     * @param string $code
      *
-     * @return  Illuminate\Http\Response
+     * @return Illuminate\Http\Response
      */
     public function confirm($code)
     {
         if (Confide::confirm($code)) {
             $notice_msg = Lang::get('confide::confide.alerts.confirmation');
+
             return Redirect::action('UsersController@login')
                 ->with('notice', $notice_msg);
         } else {
             $error_msg = Lang::get('confide::confide.alerts.wrong_confirmation');
+
             return Redirect::action('UsersController@login')
                 ->with('error', $error_msg);
         }
     }
-
 }

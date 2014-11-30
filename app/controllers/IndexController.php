@@ -5,7 +5,7 @@ class IndexController extends BaseController
     /**
      * Displays the login form
      *
-     * @return  Illuminate\Http\Response
+     * @return Illuminate\Http\Response
      */
     public function getIndex()
     {
@@ -19,7 +19,7 @@ class IndexController extends BaseController
     /**
      * Attempt to do login
      *
-     * @return  Illuminate\Http\Response
+     * @return Illuminate\Http\Response
      */
     public function postIndex()
     {
@@ -29,8 +29,7 @@ class IndexController extends BaseController
         if ($repo->login($input)) {
             return Redirect::intended('dashboard')
                 ->with('message', 'You are now logged in!');
-        }
-        else {
+        } else {
             if ($repo->isThrottled($input)) {
                 $err_msg = Lang::get('confide::confide.alerts.too_many_attempts');
             } elseif ($repo->existsButNotConfirmed($input)) {
@@ -48,7 +47,7 @@ class IndexController extends BaseController
     /**
      * Displays the forgot password form
      *
-     * @return  Illuminate\Http\Response
+     * @return Illuminate\Http\Response
      */
     public function getForgotPassword()
     {
@@ -58,17 +57,18 @@ class IndexController extends BaseController
     /**
      * Attempt to send change password link to the given email
      *
-     * @return  Illuminate\Http\Response
+     * @return Illuminate\Http\Response
      */
     public function postForgotPassword()
     {
         if (Confide::forgotPassword(Input::get('email'))) {
             $notice_msg = Lang::get('confide::confide.alerts.password_forgot');
+
             return Redirect::to('/')
                 ->with('notice', $notice_msg);
-        }
-        else {
+        } else {
             $error_msg = Lang::get('confide::confide.alerts.wrong_password_forgot');
+
             return Redirect::back()
                 ->withInput()
                 ->with('error', $error_msg);
@@ -78,9 +78,9 @@ class IndexController extends BaseController
     /**
      * Shows the change password form with the given token
      *
-     * @param  string $token
+     * @param string $token
      *
-     * @return  Illuminate\Http\Response
+     * @return Illuminate\Http\Response
      */
     public function getResetUserPassword($token)
     {
@@ -91,7 +91,7 @@ class IndexController extends BaseController
     /**
      * Attempt change password of the user
      *
-     * @return  Illuminate\Http\Response
+     * @return Illuminate\Http\Response
      */
     public function postResetUserPassword()
     {
@@ -105,11 +105,13 @@ class IndexController extends BaseController
         // By passing an array with the token, password and confirmation
         if ($repo->resetPassword($input)) {
             $notice_msg = Lang::get('confide::confide.alerts.password_reset');
+
             return Redirect::to('/')
                 ->with('notice', $notice_msg);
         } else {
             $error_msg = Lang::get('confide::confide.alerts.wrong_password_reset');
-            return Redirect::action('IndexController@getResetUserPassword', ['token'=>$input['token']])
+
+            return Redirect::action('IndexController@getResetUserPassword', ['token' => $input['token']])
                 ->withInput()
                 ->with('error', $error_msg);
         }
@@ -118,7 +120,7 @@ class IndexController extends BaseController
     /**
      * Log the user out of the application.
      *
-     * @return  Illuminate\Http\Response
+     * @return Illuminate\Http\Response
      */
     public function getLogout()
     {
