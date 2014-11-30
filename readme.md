@@ -1,6 +1,6 @@
 ## Poweradmin 3
 
-[![Build Status](https://travis-ci.org/BlueManLine/poweradmin3.svg)](https://travis-ci.org/BlueManLine/poweradmin3) [![Coverage Status](https://coveralls.io/repos/BlueManLine/poweradmin3/badge.png)](https://coveralls.io/r/BlueManLine/poweradmin3)
+[![Build Status](https://travis-ci.org/BlueManLine/poweradmin3.svg)](https://travis-ci.org/BlueManLine/poweradmin3)
 
 Poweradmin 3 is a web-based DNS administration tool for PowerDNS server.
 This is highly experimental branch to check feasibility of Laravel framework for the core of new version of Poweradmin.
