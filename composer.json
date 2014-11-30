@@ -14,7 +14,10 @@
         "way/generators": "2.*",
         "doctrine/dbal": "2.3.*",
         "barryvdh/laravel-debugbar": "1.*",
-        "barryvdh/laravel-ide-helper": "1.*"
+        "barryvdh/laravel-ide-helper": "1.*",
+        "phpunit/phpunit": "~4.0",
+        "mockery/mockery": "~0.9",
+        "satooshi/php-coveralls": "dev-master"
     },
 	"autoload": {
 		"classmap": [
