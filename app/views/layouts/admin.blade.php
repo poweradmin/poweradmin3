@@ -53,6 +53,7 @@
             </li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
+            <li><a href="{{ URL::to('/users') }}">User administration</a></li>
             <li><a href="{{ URL::to('/logout') }}">Logout</a></li>
           </ul>
         </div><!--/.nav-collapse -->

@@ -8,6 +8,13 @@
  */
 class UserRepository
 {
+    public function getAll()
+    {
+        $user = User::all();
+
+        return $user;
+    }
+
     /**
      * Signup a new account with the given parameters
      *
