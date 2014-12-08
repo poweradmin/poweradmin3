@@ -61,6 +61,20 @@
     </nav>
 
     <div class="container">
+        @if(Session::has('success'))
+        <div class="alert alert-success alert-dismissable" style="margin-top:20px;">
+            <i class="fa fa-check"></i>
+            <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+            <b>Success!</b> {{ Helpers\View::sessionString('success') }}
+        </div>
+        @endif
+        @if(Session::has('errors'))
+        <div class="alert alert-danger alert-dismissable" style="margin-top:20px;">
+            <i class="fa fa-check"></i>
+            <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+            <b>Error!</b> {{ Helpers\View::sessionString('errors') }}
+        </div>
+        @endif
         @yield('content')
     </div> <!-- /container -->
 

@@ -2,7 +2,11 @@
 
 @section('content')
 
-<h1>Permission templates</h1>
+<h1>Roles templates</h1>
+
+<div class="btn-group" role="group" aria-label="...">
+    <a href="{{ URL::to('users/add-role') }}" class="btn btn-default btn-success">Add new role</a>
+</div>
 
 <table class="table table-striped">
     <thead>
@@ -22,8 +26,8 @@
             <td>{{ $role->description }}</td>
             <td>{{ $role->created_at }}</td>
             <td>
-                <a href="" class="btn btn-success btn-xs">Edit</a>
-                <a href="" class="btn btn-danger btn-xs">Delete</a>
+                <a href="{{ URL::to('users/role/'.$role->id) }}" class="btn btn-success btn-xs">Edit</a>
+                <a href="{{ URL::to('users/delete-role/'.$role->id) }}" class="btn btn-danger btn-xs">Delete</a>
             </td>
         </tr>
         @endforeach
