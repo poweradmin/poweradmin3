@@ -82,4 +82,39 @@ class UsersController extends BaseController
             ->withSuccess('Roles changed');
     }
 
+    public function getAddRole()
+    {
+        $permissionRepo = App::make('PermissionRepository');
+
+        $permissions = $permissionRepo->getAll();
+
+        return View::make('users.add-role')
+            ->withPermissions($permissions);
+    }
+
+    public function postAddRole()
+    {
+        $role = new Role();
+
+        $errors = [];
+
+        if( $role->validation(Input::all(), Role::$createRules) ) {
+            $role->name = Input::get('name');
+            $role->description = Input::get('description');
+            $role->save();
+
+            $role->permissions()->attach(array_keys(Input::get('perm')));
+
+            return Redirect::to('users/roles')
+                ->withSuccess('Roles changed');
+        }
+
+        $errors = $role->errors();
+
+        return Redirect::back()
+            ->withInput()
+            ->withErrors($errors->all());
+
+    }
+
 }
