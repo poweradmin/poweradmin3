@@ -76,7 +76,9 @@ class UsersController extends BaseController
         $role = Role::findOrFail($id);
 
         $role->permissions()->detach();
-        $role->permissions()->attach(array_keys(Input::get('perm')));
+        if( Input::get('perm', [])!=[] ) {
+            $role->permissions()->attach(array_keys(Input::get('perm', [])));
+        }
 
         return Redirect::to('users/roles')
             ->withSuccess('Roles changed');
@@ -96,14 +98,14 @@ class UsersController extends BaseController
     {
         $role = new Role();
 
-        $errors = [];
-
         if( $role->validation(Input::all(), Role::$createRules) ) {
             $role->name = Input::get('name');
             $role->description = Input::get('description');
             $role->save();
 
-            $role->permissions()->attach(array_keys(Input::get('perm')));
+            if( Input::get('perm', [])!=[] ) {
+                $role->permissions()->attach(array_keys(Input::get('perm', [])));
+            }
 
             return Redirect::to('users/roles')
                 ->withSuccess('Roles changed');
