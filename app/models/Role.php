@@ -24,10 +24,10 @@ class Role extends EntrustRole
         $v = Validator::make($data, $rules);
 
         // check for failure
-        if ($v->fails())
-        {
+        if ($v->fails()) {
             // set errors and return false
             $this->errors = $v->errors();
+
             return false;
         }
 

@@ -76,7 +76,7 @@ class UsersController extends BaseController
         $role = Role::findOrFail($id);
 
         $role->permissions()->detach();
-        if( Input::get('perm', [])!=[] ) {
+        if (Input::get('perm', []) != []) {
             $role->permissions()->attach(array_keys(Input::get('perm', [])));
         }
 
@@ -98,12 +98,12 @@ class UsersController extends BaseController
     {
         $role = new Role();
 
-        if( $role->validation(Input::all(), Role::$createRules) ) {
+        if ($role->validation(Input::all(), Role::$createRules)) {
             $role->name = Input::get('name');
             $role->description = Input::get('description');
             $role->save();
 
-            if( Input::get('perm', [])!=[] ) {
+            if (Input::get('perm', []) != []) {
                 $role->permissions()->attach(array_keys(Input::get('perm', [])));
             }
 
@@ -116,7 +116,5 @@ class UsersController extends BaseController
         return Redirect::back()
             ->withInput()
             ->withErrors($errors->all());
-
     }
-
 }
