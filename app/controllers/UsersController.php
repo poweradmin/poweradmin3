@@ -12,6 +12,49 @@ class UsersController extends BaseController
             ->withUsers($users);
     }
 
+    public function getEdit($userId)
+    {
+        $user = User::findOrFail($userId);
+
+        $roleRepo = App::make('RoleRepository');
+        $roles = $roleRepo->getAll()->lists('name', 'id');
+
+        return View::make('users.edit')
+            ->withUser($user)
+            ->withRoles($roles);
+    }
+
+    public function postEdit($userId)
+    {
+        $user = User::findOrFail($userId);
+
+        $user->detachAllRoles();
+        $permissions = Input::get('permission', []);
+        foreach($permissions as $permission) {
+            $user->attachRole($permission);
+        }
+
+        $user->username = Input::get('username');
+        $user->email = Input::get('email');
+        $user->description = Input::get('description');
+        $user->confirmed = Input::get('confirmed', 0);
+        if (Input::has('password') && Input::has('password_confirmation')) {
+            $user->password = Input::get('password');
+            $user->password_confirmation = Input::get('password_confirmation');
+        }
+        $edited = $user->save();
+
+        if ($edited) {
+            return Redirect::to('users')
+                ->withSuccess('User changed');
+        }
+        else {
+            return Redirect::back()
+                ->withInput()
+                ->withErrors($user->errors()->all());
+        }
+    }
+
     public function getAdd()
     {
         return View::make('users.add');

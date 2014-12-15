@@ -14,4 +14,17 @@ class User extends Eloquent implements ConfideUserInterface
      */
     const STATUS_INACTIVE = 0;
     const STATUS_ACTIVE = 1;
+
+    /**
+     * Detach all roles from a user
+     *
+     * @return object
+     */
+    public function detachAllRoles()
+    {
+        DB::table('assigned_roles')->where('user_id', $this->id)->delete();
+
+        return $this;
+    }
+
 }

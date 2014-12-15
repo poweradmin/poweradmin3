@@ -14,6 +14,7 @@
         <tr>
             <th>#</th>
             <th>Username</th>
+            <th>Roles</th>
             <th>E-mail</th>
             <th>Description</th>
             <th></th>
@@ -24,11 +25,18 @@
         <tr>
             <td>{{ intval($user->id) }}</td>
             <td>{{ $user->username }}</td>
+            <td>
+                @foreach($user->roles()->get() as $userRole)
+                    {{ $userRole->name }}<br>
+                @endforeach
+            </td>
             <td>{{ $user->email }}</td>
             <td>{{ $user->description }}</td>
             <td>
-                <button type="button" class="btn btn-success btn-xs">Edit</button>
-                <button type="button" class="btn btn-danger btn-xs">Delete</button>
+                <a href="{{ URL::to('users/edit/'.$user->id) }}" class="btn btn-success btn-xs">Edit</a>
+                @if($user->id!=1)
+                <a href="{{ URL::to('users/delete/'.$user->id) }}" class="btn btn-danger btn-xs">Delete</a>
+                @endif
             </td>
         </tr>
         @endforeach
