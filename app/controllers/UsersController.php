@@ -96,6 +96,15 @@ class UsersController extends BaseController
         }
     }
 
+    public function getDelete($userId)
+    {
+        $user = User::findOrFail($userId);
+        $user->delete();
+
+        return Redirect::back()
+            ->withSuccess('User deleted');
+    }
+
     public function getRoles()
     {
         $roleRepo = App::make('RoleRepository');

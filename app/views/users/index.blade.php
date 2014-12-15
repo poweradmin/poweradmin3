@@ -35,7 +35,7 @@
             <td>
                 <a href="{{ URL::to('users/edit/'.$user->id) }}" class="btn btn-success btn-xs">Edit</a>
                 @if($user->id!=1)
-                <a href="{{ URL::to('users/delete/'.$user->id) }}" class="btn btn-danger btn-xs">Delete</a>
+                <a href="{{ URL::to('users/delete/'.$user->id) }}" class="btn btn-danger btn-xs xconfirm">Delete</a>
                 @endif
             </td>
         </tr>
