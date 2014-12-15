@@ -44,7 +44,7 @@ class UserRepository
         $this->save($user);
 
         $permissions = array_get($input, 'permission', []);
-        foreach($permissions as $permission) {
+        foreach ($permissions as $permission) {
             $user->attachRole($permission);
         }
         $user->save();

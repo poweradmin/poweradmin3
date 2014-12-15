@@ -26,5 +26,4 @@ class User extends Eloquent implements ConfideUserInterface
 
         return $this;
     }
-
 }

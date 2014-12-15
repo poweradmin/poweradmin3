@@ -30,7 +30,7 @@ class UsersController extends BaseController
 
         $user->detachAllRoles();
         $permissions = Input::get('permission', []);
-        foreach($permissions as $permission) {
+        foreach ($permissions as $permission) {
             $user->attachRole($permission);
         }
 
@@ -47,8 +47,7 @@ class UsersController extends BaseController
         if ($edited) {
             return Redirect::to('users')
                 ->withSuccess('User changed');
-        }
-        else {
+        } else {
             return Redirect::back()
                 ->withInput()
                 ->withErrors($user->errors()->all());
