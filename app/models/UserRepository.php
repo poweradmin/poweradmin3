@@ -30,6 +30,8 @@ class UserRepository
         $user->email    = array_get($input, 'email');
         $user->password = array_get($input, 'password');
 
+        $user->description = array_get($input, 'description');
+
         // The password confirmation will be removed from model
         // before saving. This field will be used in Ardent's
         // auto validation.
@@ -40,6 +42,12 @@ class UserRepository
 
         // Save if valid. Password field will be hashed before save
         $this->save($user);
+
+        $permissions = array_get($input, 'permission', []);
+        foreach($permissions as $permission) {
+            $user->attachRole($permission);
+        }
+        $user->save();
 
         return $user;
     }

@@ -57,7 +57,14 @@ class UsersController extends BaseController
 
     public function getAdd()
     {
-        return View::make('users.add');
+        $user = new User();
+
+        $roleRepo = App::make('RoleRepository');
+        $roles = $roleRepo->getAll()->lists('name', 'id');
+
+        return View::make('users.edit')
+            ->withUser($user)
+            ->withRoles($roles);
     }
 
     public function postAdd()
