@@ -53,7 +53,10 @@
             </li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
+            @if(Entrust::can('user_edit_others'))
             <li><a href="{{ URL::to('/users') }}">User administration</a></li>
+            @endif
+            <li><a href="">{{ Auth::user()->email }}</a></li>
             <li><a href="{{ URL::to('/logout') }}">Logout</a></li>
           </ul>
         </div><!--/.nav-collapse -->

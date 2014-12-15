@@ -61,6 +61,23 @@ Route::filter('guest', function () {
     }
 });
 
+
+/*
+|--------------------------------------------------------------------------
+| Role Permissions
+|--------------------------------------------------------------------------
+|
+| Access filters based on roles.
+|
+*/
+Entrust::routeNeedsPermission('users*', ['user_view_others'], Redirect::to('/dashboard'));
+Entrust::routeNeedsPermission('users/edit*', ['user_edit_others'], Redirect::to('/dashboard'));
+Entrust::routeNeedsPermission('users/add*', ['user_add_new'], Redirect::to('/dashboard'));
+Entrust::routeNeedsPermission('users/delete*', ['user_edit_others'], Redirect::to('/dashboard'));
+Entrust::routeNeedsPermission('users/roles*', ['user_edit_templ_perm'], Redirect::to('/dashboard'));
+Entrust::routeNeedsPermission('users/role*', ['user_edit_others'], Redirect::to('/dashboard'));
+Entrust::routeNeedsPermission('users/add-role*', ['templ_perm_edit'], Redirect::to('/dashboard'));
+
 /*
 |--------------------------------------------------------------------------
 | CSRF Protection Filter
