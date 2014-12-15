@@ -9,7 +9,7 @@ class UserController extends BaseController
 
     public function postIndex()
     {
-        if(Hash::check(Input::get('password_current'), Auth::user()->password) ) {
+        if (Hash::check(Input::get('password_current'), Auth::user()->password)) {
             $user = Auth::user();
             $user->password = Input::get('password');
             $user->password_confirmation = Input::get('password_confirmation');

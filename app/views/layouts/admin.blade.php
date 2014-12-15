@@ -36,7 +36,7 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
+            <li class="{{ Helpers\View::activeLaravelLink('DashboardController@*') }}"><a href="{{ URL::to('/dashboard') }}">Dashboard</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#contact">Contact</a></li>
             <li class="dropdown">
@@ -56,7 +56,7 @@
             @if(Entrust::can('user_edit_others'))
             <li><a href="{{ URL::to('/users') }}">User administration</a></li>
             @endif
-            <li><a href="{{ URL::to('/user') }}">{{ Auth::user()->username }}</a></li>
+            <li class="{{ Helpers\View::activeLaravelLink('UserController@*') }}"><a href="{{ URL::to('/user') }}">{{ Auth::user()->username }}</a></li>
             <li><a href="{{ URL::to('/logout') }}">Logout</a></li>
           </ul>
         </div><!--/.nav-collapse -->
