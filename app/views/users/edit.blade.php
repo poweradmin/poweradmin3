@@ -2,7 +2,11 @@
 
 @section('content')
 
+@if($user->exists)
 <h1>Edit user "{{{ $user->username }}}"</h1>
+@else
+<h1>Add new user</h1>
+@endif
 
 <div class="row">
 

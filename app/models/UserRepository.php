@@ -26,6 +26,7 @@ class UserRepository
     {
         $user = new User();
 
+        $user->confirmed = array_get($input, 'confirmed', 0);
         $user->username = array_get($input, 'username');
         $user->email    = array_get($input, 'email');
         $user->password = array_get($input, 'password');
