@@ -2,8 +2,6 @@
 
 class Domain extends Eloquent
 {
-    protected $table = 'domains';
-
     /**
      * records relationship
      */

@@ -76,6 +76,9 @@ Entrust::routeNeedsPermission('users/delete*', ['user_edit_others'], Redirect::t
 Entrust::routeNeedsPermission('users/roles*', ['user_edit_templ_perm'], Redirect::to('/dashboard'));
 Entrust::routeNeedsPermission('users/role*', ['user_edit_others'], Redirect::to('/dashboard'));
 Entrust::routeNeedsPermission('users/add-role*', ['templ_perm_edit'], Redirect::to('/dashboard'));
+Entrust::routeNeedsPermission('supermaster*', ['supermaster_view'], Redirect::to('/dashboard'));
+Entrust::routeNeedsPermission('supermaster/add*', ['supermaster_add'], Redirect::to('/dashboard'));
+Entrust::routeNeedsPermission('supermaster/edit*', ['supermaster_edit'], Redirect::to('/dashboard'));
 
 /*
 |--------------------------------------------------------------------------

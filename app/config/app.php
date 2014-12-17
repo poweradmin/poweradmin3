@@ -122,6 +122,9 @@ return array(
         'Illuminate\View\ViewServiceProvider',
         'Illuminate\Workbench\WorkbenchServiceProvider',
 
+        /* own providers */
+        'Validators\ValidationExtensionServiceProvider',
+
         /* package providers */
         'Zizaco\Confide\ServiceProvider',
         'Zizaco\Entrust\EntrustServiceProvider',
