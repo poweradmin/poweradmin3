@@ -22,9 +22,9 @@ class View
 
         if ($sessionContent instanceof \Illuminate\Support\ViewErrorBag) {
             $messages = $sessionContent->toArray();
-            $return = join('<br>', $messages[0]);
+            $return = implode('<br>', $messages[0]);
         } elseif (is_array($sessionContent)) {
-            $return = join('<br>', $sessionContent);
+            $return = implode('<br>', $sessionContent);
         } elseif (is_string($sessionContent)) {
             $return = $sessionContent;
         }
