@@ -2,5 +2,4 @@
 
 class Record extends Eloquent
 {
-
 }

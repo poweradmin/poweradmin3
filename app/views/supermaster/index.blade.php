@@ -21,8 +21,7 @@
             <td>{{ $supermaster->nameserver }}</td>
             <td>{{ $supermaster->account }}</td>
             <td>
-                <button type="button" class="btn btn-success btn-xs">Edit</button>
-                <button type="button" class="btn btn-danger btn-xs">Delete</button>
+                <a href="{{ URL::to('/supermaster/delete/'.$supermaster->ip.'/'.$supermaster->nameserver) }}" class="btn btn-danger btn-xs">Delete</a>
             </td>
         </tr>
         @endforeach

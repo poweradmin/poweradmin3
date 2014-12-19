@@ -34,7 +34,7 @@ class SupermasterController extends BaseController
             if (is_array($saved)) {
                 return Redirect::to('/supermaster')
                     ->withSuccess('Supermaster added');
-            } elseif($saved instanceof Supermaster) {
+            } elseif ($saved instanceof Supermaster) {
                 return Redirect::back()
                     ->withInput()
                     ->withErrors('The supermaster (ip and hostname) exists');
@@ -50,8 +50,14 @@ class SupermasterController extends BaseController
         }
     }
 
-    public function getEdit()
+    public function getDelete($ip, $hostname)
     {
+        /** @var SupermasterRepository $supermasterRepo */
+        $supermasterRepo = App::make('SupermasterRepository');
 
+        $deleted = $supermasterRepo->delete($ip, $hostname);
+
+        return Redirect::back()
+            ->withSuccess('Supermaster deleted');
     }
 }

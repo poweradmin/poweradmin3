@@ -9,13 +9,13 @@ class Supermaster extends Eloquent
     public static $createRules = [
         'ip' => 'required|ip',
         'nameserver'  => 'required|hostname',
-        'account' => 'required|exists:users,username'
+        'account' => 'required|exists:users,username',
     ];
 
     /**
      * Save the model to the database.
      *
-     * @param  array  $options
+     * @param  array $options
      * @return bool
      */
     public function save(array $options = [])
@@ -33,8 +33,8 @@ class Supermaster extends Eloquent
 
         try {
             $saved = parent::save($options);
-        } catch(ErrorException $e) {
-            if ($e->getMessage()=='PDO::lastInsertId() expects parameter 1 to be string, array given') {
+        } catch (ErrorException $e) {
+            if ($e->getMessage() == 'PDO::lastInsertId() expects parameter 1 to be string, array given') {
                 $saved = [
                     'ip' => $this->ip,
                     'nameserver' => $this->nameserver,
