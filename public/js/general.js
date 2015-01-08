@@ -5,7 +5,7 @@ $(document).ready(function(){
     });
 
     $('.xconfirm').click(function(){
-        if(!confirm('Really delete the user?')) {
+        if(!confirm('Really delete the record?')) {
             return false;
         }
     });

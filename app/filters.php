@@ -79,6 +79,7 @@ Entrust::routeNeedsPermission('users/add-role*', ['templ_perm_edit'], Redirect::
 Entrust::routeNeedsPermission('supermaster*', ['supermaster_view'], Redirect::to('/dashboard'));
 Entrust::routeNeedsPermission('supermaster/add*', ['supermaster_add'], Redirect::to('/dashboard'));
 Entrust::routeNeedsPermission('supermaster/edit*', ['supermaster_edit'], Redirect::to('/dashboard'));
+Entrust::routeNeedsPermission('zones*', ['zone_master_add'], Redirect::to('/dashboard'));
 
 /*
 |--------------------------------------------------------------------------

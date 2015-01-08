@@ -49,7 +49,10 @@ class ZonesController extends BaseController
 
     public function getTemplates()
     {
-        $templates = [];
+        /** @var ZoneTemplateRepository $templateRepo */
+        $templateRepo = App::make('ZoneTemplateRepository');
+
+        $templates = $templateRepo->getAll();
 
         return View::make('zones.templates')
             ->withTemplates($templates);
@@ -123,6 +126,22 @@ class ZonesController extends BaseController
             return Redirect::back()
                 ->withInput()
                 ->withErrors($validator->errors()->all());
+        }
+    }
+
+    public function getDeleteTemplate($id)
+    {
+        /** @var ZoneTemplateRepository $templateRepo */
+        $templateRepo = App::make('ZoneTemplateRepository');
+
+        $deletedTemplate = $templateRepo->deleteTemplate($id);
+
+        if($deletedTemplate) {
+            return Redirect::back()
+                ->withSuccess('Template deleted');
+        } else {
+            return Redirect::back()
+                ->withError('You cant delete the template');
         }
     }
 }
