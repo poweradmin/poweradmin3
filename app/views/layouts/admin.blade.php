@@ -42,7 +42,7 @@
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="">Add master zone</a></li>
                             <li><a href="{{ URL::to('/zones/add-slave') }}">Add slave zone</a></li>
-                            <li><a href="">Zone template</a></li>
+                            <li><a href="{{ URL::to('/zones/templates') }}">Zone templates</a></li>
                         </ul>
                     </li>
                     <li class="dropdown{{ Helpers\View::activeLaravelLink('SupermasterController@*') }}">
@@ -99,7 +99,6 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.map"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
     {{ HTML::script('/js/general.js') }}
     @yield('js')
