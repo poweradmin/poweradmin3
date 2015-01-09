@@ -30,8 +30,8 @@
                 <td>{{{ $template->name }}}</td>
                 <td>{{{ $template->description }}}</td>
                 <td>{{ $template->records->count() }}</td>
-                <td>{{{ $template->updated_at }}}</td>
-                <td>{{{ $template->created_at }}}</td>
+                <td>{{ $template->updated_at }}</td>
+                <td>{{ $template->created_at }}</td>
             </tr>
         @endforeach
     </tbody>

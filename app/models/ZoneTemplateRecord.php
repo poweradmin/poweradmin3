@@ -2,7 +2,6 @@
 
 class ZoneTemplateRecord extends Eloquent
 {
-
     protected $guarded = [];
 
     private static $createRules = [

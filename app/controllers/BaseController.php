@@ -13,4 +13,10 @@ class BaseController extends Controller
             $this->layout = View::make($this->layout);
         }
     }
+
+    public function redirectUnprivileges()
+    {
+        return Redirect::back()
+            ->withError('Sorry, you dont have permission to see previous page');
+    }
 }

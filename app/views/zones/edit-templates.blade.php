@@ -41,26 +41,10 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr class="record-row">
-                        <td class="col-md-1 text-right">
-                            {{ Form::button('<span class="glyphicon glyphicon-trash"></span>', ['class'=>'btn btn-sm btn-default delete-record', 'style'=>'display:none;']) }}
-                        </td>
-                        <td class="col-md-3">
-                            {{ Form::text('record_names[]', null, ['class'=>'form-control', 'placeholder'=>'Name']) }}
-                        </td>
-                        <td class="col-md-2">
-                            {{ Form::select('record_types[]', array_combine(Record::$types, Record::$types), null, ['class'=>'form-control']) }}
-                        </td>
-                        <td class="col-md-3">
-                            {{ Form::text('record_contents[]', null, ['class'=>'form-control', 'placeholder'=>'Content']) }}
-                        </td>
-                        <td class="col-md-2">
-                            {{ Form::text('record_priorities[]', null, ['class'=>'form-control', 'placeholder'=>'Priority']) }}
-                        </td>
-                        <td class="col-md-2">
-                            {{ Form::text('record_ttls[]', 86400, ['class'=>'form-control', 'placeholder'=>'TTL']) }}
-                        </td>
-                    </tr>
+                    @foreach($template->records as $record)
+                        @include('zones._record-row', ['record' => $record])
+                    @endforeach
+                    @include('zones._record-row', ['record' => new ZoneTemplateRecord(['ttl'=>86400])])
                     </tbody>
                 </table>
                 <button class="btn btn-sm btn-default add-record"><span class="glyphicon glyphicon-plus"></span> One more record</button>
@@ -90,6 +74,10 @@
 @section('js')
 <script type="text/javascript">
 $(document).ready(function(){
+
+    if($('.record-row').length>1) {
+        $('.delete-record').show();
+    }
 
     // adding new record table row
     $('.add-record').click(function(){
