@@ -68,54 +68,17 @@ class ZonesController extends BaseController
 
     public function postAddTemplate()
     {
-        $post = Input::all();
+        /** @var ZoneTemplateRepository $templateRepo */
+        $templateRepo = App::make('ZoneTemplateRepository');
 
-        $validator = Validator::make($post, ZoneTemplate::$createRules);
+        $addTemplate = $templateRepo->addTemplate(Input::all());
 
-        if ($validator->passes()) {
-            DB::beginTransaction();
-            try {
-                $zoneTemplate = new ZoneTemplate();
-                $zoneTemplate->name = array_get($post, 'name');
-                $zoneTemplate->description = array_get($post, 'description');
-                $zoneTemplate->user_id = Auth::user()->id;
-                $zoneTemplate->save();
-
-                $zoneTemplateRecords = [];
-
-                foreach ($post['record_names'] as $key => $record) {
-                    $templateRecordArray = [
-                        'template_id' => $zoneTemplate->id,
-                        'name'  => $post['record_names'][$key],
-                        'type' => $post['record_types'][$key],
-                        'content' => $post['record_contents'][$key],
-                        'ttl' => intval($post['record_ttls'][$key]),
-                        'priority' => intval($post['record_priorities'][$key]),
-                    ];
-                    $recordValidator = Validator::make($templateRecordArray, ZoneTemplateRecord::getCreateRules());
-
-                    if ($recordValidator->passes()) {
-                        $zoneTemplateRecords[] = new ZoneTemplateRecord($templateRecordArray);
-                    }
-                }
-
-                $zoneTemplate->records()->saveMany($zoneTemplateRecords);
-
-                DB::commit();
-            } catch (\Exception $ex) {
-                DB::rollback();
-
-                return Redirect::back()
-                    ->withInput()
-                    ->withErrors($ex->getMessage());
-            }
-
+        if ($addTemplate) {
             return Redirect::to('/zones/templates')
                 ->withSuccess('Template added');
         } else {
             return Redirect::back()
-                ->withInput()
-                ->withErrors($validator->errors()->all());
+                ->withError('You cant add the template');
         }
     }
 
