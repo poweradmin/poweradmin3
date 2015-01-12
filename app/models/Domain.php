@@ -4,9 +4,20 @@ class Domain extends Eloquent
 {
     public $timestamps = false;
 
+    public $fillable = ['name', 'master', 'type', 'account'];
+
+    public static $types = ['master', 'native'];
+
     public static $createSlaveRules = [
-        'name'  => 'required|hostname',
+        'name'  => 'required|hostname|unique:domains,name',
         'master' => 'required|ip',
+        'type' => 'required|in:slave',
+        'account' => 'required|exists:users,username',
+    ];
+
+    private static $createMasterRules = [
+        'name'  => 'required|hostname|unique:domains,name',
+        'type' => 'required',
         'account' => 'required|exists:users,username',
     ];
 
@@ -16,6 +27,14 @@ class Domain extends Eloquent
     public function records()
     {
         return $this->hasMany('Record', 'domain_id', 'id');
+    }
+
+    public static function getCreateMasterRules()
+    {
+        $createRules = self::$createMasterRules;
+        $createRules['type'] .= '|in:'.implode(',', Domain::$types);
+
+        return $createRules;
     }
 
     /**

@@ -78,7 +78,7 @@ class ZonesController extends BaseController
                 ->withSuccess('Template added');
         } else {
             return Redirect::back()
-                ->withError('You cant add the template');
+                ->withErrors('You cant add the template');
         }
     }
 
@@ -94,7 +94,7 @@ class ZonesController extends BaseController
                 ->withSuccess('Template deleted');
         } else {
             return Redirect::back()
-                ->withError('You cant delete the template');
+                ->withErrors('You cant delete the template');
         }
     }
 
@@ -125,7 +125,42 @@ class ZonesController extends BaseController
                 ->withSuccess('Template edited');
         } else {
             return Redirect::back()
-                ->withError('You cant edit the template');
+                ->withErrors('You cant edit the template');
+        }
+    }
+
+    public function getAddMaster()
+    {
+        $domain = new Domain();
+        $usersList = User::all()->lists('username', 'username');
+
+        /** @var ZoneTemplateRepository $templateRepo */
+        $templateRepo = App::make('ZoneTemplateRepository');
+
+        $templates = $templateRepo->getAll()->lists('name', 'id');
+
+        return View::make('zones.master')
+            ->withDomain($domain)
+            ->withTemplates($templates)
+            ->with('usersList', $usersList);
+    }
+
+    public function postAddMaster()
+    {
+        $post = Input::all();
+
+        /** @var DomainRepository $domainRepo */
+        $domainRepo = App::make('DomainRepository');
+
+        $added = $domainRepo->addMaster($post);
+
+        if ($added === true) {
+            return Redirect::to('/dashboard')
+                ->withSuccess('Zone added');
+        } else {
+            return Redirect::back()
+                ->withInput()
+                ->withErrors($added);
         }
     }
 }

@@ -40,7 +40,7 @@
                     <li class="dropdown{{ Helpers\View::activeLaravelLink('ZonesController@*') }}">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Zones <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="">Add master zone</a></li>
+                            <li><a href="{{ URL::to('/zones/add-master') }}">Add master zone</a></li>
                             <li><a href="{{ URL::to('/zones/add-slave') }}">Add slave zone</a></li>
                             <li><a href="{{ URL::to('/zones/templates') }}">Zone templates</a></li>
                         </ul>

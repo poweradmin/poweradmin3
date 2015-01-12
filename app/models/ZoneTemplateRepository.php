@@ -59,7 +59,7 @@ class ZoneTemplateRepository
     /**
      * Add new zone template
      *
-     * @param array $data
+     * @param  array       $data
      * @return bool|string
      */
     public function addTemplate($data)
@@ -90,8 +90,8 @@ class ZoneTemplateRepository
     /**
      * Edit zone template with their records
      *
-     * @param  integer $id
-     * @param  array   $data
+     * @param  integer     $id
+     * @param  array       $data
      * @return bool|string
      */
     public function editTemplate($id, $data)
@@ -119,8 +119,8 @@ class ZoneTemplateRepository
     /**
      * Process of add or update zone template
      *
-     * @param ZoneTemplate $zoneTemplate
-     * @param array $data
+     * @param  ZoneTemplate $zoneTemplate
+     * @param  array        $data
      * @return bool
      */
     private function processAddEditTemplate(ZoneTemplate $zoneTemplate, $data)
@@ -151,5 +151,16 @@ class ZoneTemplateRepository
         $zoneTemplate->records()->saveMany($zoneTemplateRecords);
 
         return true;
+    }
+
+    public static function proceedPlaceholder($element, $domainName, $currDate = null)
+    {
+        if (is_null($currDate)) {
+            $currDate = date('Ymd');
+        }
+
+        $currDate .= '00';
+
+        return str_replace(['[ZONE]', '[SERIAL]'], [$domainName, $currDate], $element);
     }
 }

@@ -2,6 +2,8 @@
 
 class Record extends Eloquent
 {
+    public $timestamps = false;
+
     public static $types = [
         'A',
         'AAAA',
