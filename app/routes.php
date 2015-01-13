@@ -6,6 +6,7 @@ Route::group(array('before' => ['auth']), function () {
     Route::controller('user', 'UserController');
     Route::controller('supermaster', 'SupermasterController');
     Route::controller('zones', 'ZonesController');
+    Route::controller('domain', 'DomainController');
 });
 
 Route::controller('/', 'IndexController');

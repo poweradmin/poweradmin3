@@ -24,7 +24,7 @@
             <td>{{ $domain->records->count() }}</td>
             <td>
                 <button type="button" class="btn btn-success btn-xs">Edit</button>
-                <button type="button" class="btn btn-danger btn-xs">Delete</button>
+                <a href="{{ URL::to('/domain/delete/'.$domain->id) }}" class="btn btn-danger btn-xs">Delete</a>
             </td>
         </tr>
         @endforeach

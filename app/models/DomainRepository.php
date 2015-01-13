@@ -48,4 +48,26 @@ class DomainRepository
 
         return $recordValidator->errors()->all();
     }
+
+    /**
+     * Delete domain and it records
+     *
+     * @param  int       $id
+     * @return bool
+     * @throws Exception
+     */
+    public function deleteDomain($id)
+    {
+        /** @var Domain $domain */
+        $domain = Domain::findOrFail($id);
+
+        if (Entrust::hasRole('Administrator') || $domain->account == Auth::user()->username) {
+            $domain->records()->delete();
+            $domain->delete();
+
+            return true;
+        }
+
+        return false;
+    }
 }
