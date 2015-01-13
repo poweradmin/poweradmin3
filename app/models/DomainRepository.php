@@ -36,8 +36,8 @@ class DomainRepository
                         $domainRecord->name = ZoneTemplateRepository::proceedPlaceholder($templateRecord->name, $domain->name);
                         $domainRecord->type = $templateRecord->type;
                         $domainRecord->content = ZoneTemplateRepository::proceedPlaceholder($templateRecord->content, $domain->name);
-                        $domainRecord->ttl = $templateRecord->ttl;
-                        $domainRecord->prio = $templateRecord->priority == 0 ? null : $templateRecord->priority;
+                        $domainRecord->ttl = intval($templateRecord->ttl);
+                        $domainRecord->prio = intval($templateRecord->priority);
                         $domainRecord->save();
                     }
                 }
