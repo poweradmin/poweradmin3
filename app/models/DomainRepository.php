@@ -70,4 +70,76 @@ class DomainRepository
 
         return false;
     }
+
+    public function getDomain($id)
+    {
+        /** @var Domain $domain */
+        $domain = Domain::findOrFail($id);
+
+        if (Entrust::hasRole('Administrator') || $domain->account == Auth::user()->username) {
+            return $domain;
+
+            return true;
+        }
+
+        return false;
+    }
+
+    public function editDomain($id, $data)
+    {
+        /** @var Domain $domain */
+        $domain = Domain::findOrFail($id);
+
+        if (Entrust::hasRole('Administrator') || $domain->account == Auth::user()->username) {
+            $domainRecordsList = $domain->records()->lists('id');
+
+            // modified and deleted records
+            if (isset($data['record_names'])) {
+                // deleted records
+                $deletedRecordsIds = array_diff($domainRecordsList, array_keys($data['record_names']));
+                if (!empty($deletedRecordsIds)) {
+                    Record::destroy($deletedRecordsIds);
+                }
+
+                // changed recordss
+                foreach ($data['record_names'] as $key => $record) {
+                    $record = Record::findOrFail($key);
+                    $record->name = $data['record_names'][$key];
+                    $record->type = $data['record_types'][$key];
+                    $record->content = $data['record_contents'][$key];
+                    $record->ttl = $data['record_ttls'][$key];
+                    $record->prio = $data['record_priorities'][$key];
+                    $record->save();
+                }
+            }
+
+            // new records
+            if (isset($data['record_names_new'])) {
+                $domainRecords = [];
+                foreach ($data['record_names_new'] as $key => $record) {
+                    $domainRecordArray = [
+                        'domain_id' => $domain->id,
+                        'name' => $data['record_names_new'][$key],
+                        'type' => $data['record_types_new'][$key],
+                        'content' => $data['record_contents_new'][$key],
+                        'ttl' => intval($data['record_ttls_new'][$key]),
+                        'prio' => intval($data['record_priorities_new'][$key]),
+                    ];
+                    $recordValidator = Validator::make($domainRecordArray, Record::getCreateRules());
+
+                    if ($recordValidator->passes()) {
+                        $domainRecords[] = new Record($domainRecordArray);
+                    }
+                }
+
+                if (!empty($domainRecords)) {
+                    $domain->records()->saveMany($domainRecords);
+                }
+            }
+
+            return true;
+        }
+
+        return false;
+    }
 }

@@ -23,7 +23,7 @@
             <td>{{ $domain->type }}</td>
             <td>{{ $domain->records->count() }}</td>
             <td>
-                <button type="button" class="btn btn-success btn-xs">Edit</button>
+                <a href="{{ URL::to('/domain/edit/'.$domain->id) }}" class="btn btn-success btn-xs">Edit</a>
                 <a href="{{ URL::to('/domain/delete/'.$domain->id) }}" class="btn btn-danger btn-xs">Delete</a>
             </td>
         </tr>

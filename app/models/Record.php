@@ -4,6 +4,25 @@ class Record extends Eloquent
 {
     public $timestamps = false;
 
+    public $guarded = ['changed_date', 'disabled', 'ordername', 'auth'];
+
+    private static $createRules = [
+        'domain_id' => 'required|exists:domains,id',
+        'name'  => 'required',
+        'type' => 'required',
+        'content' => 'required',
+        'ttl' => 'required|integer',
+        'prio' => 'required|integer',
+    ];
+
+    public static function getCreateRules()
+    {
+        $createRules = self::$createRules;
+        $createRules['type'] .= '|in:'.implode(',', Record::$types);
+
+        return $createRules;
+    }
+
     public static $types = [
         'A',
         'AAAA',
