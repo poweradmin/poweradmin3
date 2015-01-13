@@ -1,26 +1,29 @@
 <?php
 
-use Illuminate\Auth\UserTrait;
-use Illuminate\Auth\UserInterface;
-use Illuminate\Auth\Reminders\RemindableTrait;
-use Illuminate\Auth\Reminders\RemindableInterface;
+use Zizaco\Confide\ConfideUser;
+use Zizaco\Confide\ConfideUserInterface;
+use Zizaco\Entrust\HasRole;
 
-class User extends Eloquent implements UserInterface, RemindableInterface {
+class User extends Eloquent implements ConfideUserInterface
+{
+    use ConfideUser;
+    use HasRole;
 
-	use UserTrait, RemindableTrait;
+    /*
+     * User statuses
+     */
+    const STATUS_INACTIVE = 0;
+    const STATUS_ACTIVE = 1;
 
-	/**
-	 * The database table used by the model.
-	 *
-	 * @var string
-	 */
-	protected $table = 'users';
+    /**
+     * Detach all roles from a user
+     *
+     * @return object
+     */
+    public function detachAllRoles()
+    {
+        DB::table('assigned_roles')->where('user_id', $this->id)->delete();
 
-	/**
-	 * The attributes excluded from the model's JSON form.
-	 *
-	 * @var array
-	 */
-	protected $hidden = array('password', 'remember_token');
-
+        return $this;
+    }
 }
